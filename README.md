@@ -1,28 +1,28 @@
 # Collapse React Component
 
-[![NPM](https://img.shields.io/npm/v/@kaprisa57/react-collapse.svg)](https://www.npmjs.com/package/@kaprisa57/react-collapse/) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Coverage Status](https://coveralls.io/repos/github/kseniya57/react-collapse/badge.svg?branch=main)](https://coveralls.io/github/kseniya57/react-collapse?branch=main)
+[![NPM](https://img.shields.io/npm/v/@idui/react-collapse.svg)](https://www.npmjs.com/package/@idui/react-collapse/) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Coverage Status](https://coveralls.io/repos/github/id-ui/react-collapse/badge.svg?branch=main)](https://coveralls.io/github/id-ui/react-collapse?branch=main)
 
-- [Docs](https://kseniya57.github.io/react-collapse/?path=/docs/collapse--playground)
-- [Playground](https://kseniya57.github.io/react-collapse/?path=/story/collapse--playground)
+- [Docs](https://id-ui.github.io/react-collapse/?path=/docs/collapse--playground)
+- [Playground](https://id-ui.github.io/react-collapse/?path=/story/collapse--playground)
 
 ## Install
 
 ```bash
-npm install --save @kaprisa57/react-collapse
+npm install --save @idui/react-collapse
 ```
 
 ```bash
-yarn add @kaprisa57/react-collapse
+yarn add @idui/react-collapse
 ```
 
-### See props in [Docs](https://kseniya57.github.io/react-collapse/?path=/docs/collapse--playground)
+### See props in [Docs](https://id-ui.github.io/react-collapse/?path=/docs/collapse--playground)
 
 
 ### Basic Example
 
 ```jsx
 import React from 'react'
-import Collapse from '@kaprisa57/react-collapse'
+import Collapse from '@idui/react-collapse'
 
 function Example() {
   return <Collapse>
@@ -36,7 +36,7 @@ function Example() {
 
 ```jsx
 import React, { Fragment } from 'react'
-import Collapse from '@kaprisa57/react-collapse'
+import Collapse from '@idui/react-collapse'
 
 function Example() {
   return <Collapse>
@@ -58,7 +58,7 @@ function Example() {
 
 ```jsx
 import React from 'react'
-import Collapse from '@kaprisa57/react-collapse'
+import Collapse from '@idui/react-collapse'
 
 function Example() {
   return <Collapse>
@@ -77,7 +77,7 @@ function Example() {
 ```jsx
 import React from 'react'
 import styled from 'styled-components';
-import Collapse from '@kaprisa57/react-collapse'
+import Collapse from '@idui/react-collapse'
 
 const Header = styled(Collapse.Header)`
   padding: 10px;
@@ -116,7 +116,7 @@ function Example() {
 
 ```jsx
 import React from 'react'
-import Collapse from '@kaprisa57/react-collapse'
+import Collapse from '@idui/react-collapse'
 
 function Example() {
   return  <Collapse>
@@ -139,8 +139,8 @@ function Example() {
 }
 ```
 
-### See more details in [storybook](https://kseniya57.github.io/react-collapse/?path=/docs/collapse--playground)
+### See more details in [storybook](https://id-ui.github.io/react-collapse/?path=/docs/collapse--playground)
 
 ## License
 
-MIT © [kaprisa57@gmail.com](https://github.com/kaprisa57@gmail.com)
+MIT © [kaprisa57@gmail.com](https://github.com/id-ui)
