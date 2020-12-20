@@ -120,11 +120,11 @@ const Button = styled.button`
   cursor: pointer;
   border-radius: 0.5rem;
   padding: 0 1.5rem;
-  background-color: #c83b03;
-  color: #fff;
+  background-color: #580b9e;
+  color: #ffffff;
   height: 3.5rem;
   &:hover {
-    background-color: #ae3102;
+    background-color: #9552d4;
   }
   &:not(:last-child) {
     margin-right: 10px;

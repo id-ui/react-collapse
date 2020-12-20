@@ -1,6 +1,10 @@
 # Collapse React Component
 
-[![NPM](https://img.shields.io/npm/v/@idui/react-collapse.svg)](https://www.npmjs.com/package/@idui/react-collapse/) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![Coverage Status](https://coveralls.io/repos/github/id-ui/react-collapse/badge.svg?branch=main)](https://coveralls.io/github/id-ui/react-collapse?branch=main)
+[![NPM](https://img.shields.io/npm/v/@idui/react-collapse.svg)](https://www.npmjs.com/package/@idui/react-collapse/)
+[![Size](https://img.shields.io/bundlephobia/min/@idui/react-collapse)](https://www.npmjs.com/package/@idui/react-collapse)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![Coverage Status](https://coveralls.io/repos/github/id-ui/react-collapse/badge.svg?branch=main)](https://coveralls.io/github/id-ui/react-collapse?branch=main)
+[![LICENSE](https://img.shields.io/github/license/id-ui/react-collapse)](https://github.com/id-ui/react-collapse/blob/main/LICENSE)
 
 - [Docs](https://id-ui.github.io/react-collapse/?path=/docs/collapse--playground)
 - [Playground](https://id-ui.github.io/react-collapse/?path=/story/collapse--playground)
