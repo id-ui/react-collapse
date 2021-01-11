@@ -7,9 +7,8 @@ import _ from 'lodash';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useOpen } from 'components/Collapse/hooks';
 
-const checkIfClosed = (body) =>
-  expect(body.style.transform).toBe('scaleY(0) translateZ(0)');
-const checkIfOpen = (body) => expect(body.style.transform).toBe('none');
+const checkIfClosed = (body) => expect(body.style.height).toBe('0px');
+const checkIfOpen = (body) => expect(body.style.height).toBe('auto');
 
 describe('Collapse', () => {
   it('accessible', async () => {

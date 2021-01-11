@@ -3,6 +3,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 
+const STATES = {
+  open: 'open',
+  close: 'close',
+};
+
 function Body({ isOpen, children, close, animation, className, lazy }, ref) {
   const [isInitialized, setInitialized] = useState(false);
 
@@ -17,9 +22,13 @@ function Body({ isOpen, children, close, animation, className, lazy }, ref) {
       {lazy && !isInitialized ? null : (
         <motion.div
           ref={ref}
-          initial={animation.closed}
-          transition={animation.transition}
-          animate={isOpen ? animation.open : animation.closed}
+          initial={animation[STATES.close]}
+          transition={
+            isOpen
+              ? animation.transition[STATES.open]
+              : animation.transition[STATES.close]
+          }
+          animate={isOpen ? animation[STATES.open] : animation[STATES.close]}
           className={className}
         >
           {_.isFunction(children) ? children({ close }) : children}
@@ -41,18 +50,18 @@ BodyWithRef.propTypes = {
 
 BodyWithRef.defaultProps = {
   animation: {
-    closed: {
-      scaleY: 0,
-      originY: 0,
+    [STATES.close]: {
+      height: 0,
       overflow: 'hidden',
     },
-    open: {
-      scaleY: 1,
-      originY: 0,
+    [STATES.open]: {
+      height: 'auto',
       overflow: 'inherit',
-      transition: { overflow: { delay: 0.2 } },
     },
-    transition: { duration: 0.2 },
+    transition: {
+      [STATES.open]: { duration: 0.2, overflow: { delay: 0.2 } },
+      [STATES.close]: { duration: 0.2 },
+    },
   },
   lazy: true,
 };

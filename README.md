@@ -126,13 +126,16 @@ function Example() {
   return  <Collapse>
      <Collapse.Header>Open</Collapse.Header>
      <Collapse.Body animation={{
-       closed: {
+       close: {
          opacity: 0,
        },
        open: {
          opacity: 1
        },
-       transition: { duration: 0.1, ease: [0.3, 0.6, 0.3, 0.2] },
+       transition: {
+            open: {duration: 0.2, ease: [0.3, 0.6, 0.3, 0.2]},
+            close: {duration: 0.1, ease: [0.3, 0.6, 0.3, 0.2]},
+       },
      }}>
        :)
      </Collapse.Body>

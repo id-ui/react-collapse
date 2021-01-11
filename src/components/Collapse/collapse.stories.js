@@ -101,14 +101,14 @@ const Header = styled(Collapse.Header)`
 
 const Body = styled(Collapse.Body)`
   box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
-  padding: 20px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   width: 100%;
 `;
 
 const Content = styled.div`
-  height: 200px;
+  height: 300px;
+  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -245,13 +245,16 @@ export function customAnimation() {
       <Header>Open</Header>
       <Body
         animation={{
-          closed: {
+          close: {
             opacity: 0,
           },
           open: {
             opacity: 1,
           },
-          transition: { duration: 0.1, ease: [0.3, 0.6, 0.3, 0.2] },
+          transition: {
+            open: { duration: 0.2, ease: [0.3, 0.6, 0.3, 0.2] },
+            close: { duration: 0.1, ease: [0.3, 0.6, 0.3, 0.2] },
+          },
         }}
       >
         <Content>
