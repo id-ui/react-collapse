@@ -1,16 +1,15 @@
 import React from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import { Container } from './styled';
 
 function Body({ isOpen, children, close, animation, className }, ref) {
   return (
     <AnimatePresence initial={false}>
       {isOpen && (
-        <Container ref={ref} {...animation} className={className}>
+        <motion.div ref={ref} {...animation} className={className}>
           {_.isFunction(children) ? children({ close }) : children}
-        </Container>
+        </motion.div>
       )}
     </AnimatePresence>
   );
@@ -27,12 +26,16 @@ BodyWithRef.defaultProps = {
   animation: {
     initial: {
       height: 0,
+      overflow: 'hidden',
     },
     animate: {
       height: 'auto',
+      overflow: 'inherit',
+      transition: { overflow: { delay: 0.2 } },
     },
     exit: {
       height: 0,
+      overflow: 'hidden',
     },
     transition: { duration: 0.2 },
   },
