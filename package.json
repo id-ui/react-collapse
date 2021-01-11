@@ -1,6 +1,6 @@
 {
   "name": "@idui/react-collapse",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "React Collapse Component",
   "author": "kaprisa57@gmail.com",
   "license": "MIT",
@@ -80,7 +80,8 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-test-renderer": "^16.14.0",
-    "storybook-addon-react-docgen": "^1.2.42",
+    "styled-components": "^5.2.1",
+    "styled-tools": "^1.7.2",
     "webpack": "^5.0.0-rc.6",
     "webpack-cli": "^4.0.0-rc.1"
   },
@@ -90,9 +91,7 @@
   "dependencies": {
     "framer-motion": "^2.9.5",
     "lodash": "^4.17.20",
-    "prop-types": "^15.7.2",
-    "styled-components": "^5.2.1",
-    "styled-tools": "^1.7.2"
+    "prop-types": "^15.7.2"
   },
   "lint-staged": {
     "src/**/*.{js,jsx}": [

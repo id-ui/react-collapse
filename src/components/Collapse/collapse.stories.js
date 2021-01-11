@@ -1,7 +1,6 @@
 import React, { Fragment, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import _ from 'lodash';
-import { withPropsTable } from 'storybook-addon-react-docgen';
 import { prop } from 'styled-tools';
 import Collapse from './Collapse';
 
@@ -81,12 +80,6 @@ export default {
     'Collapse.Header.className': {
       control: 'text',
       description: 'Header className',
-    },
-  },
-  decorators: [withPropsTable],
-  parameters: {
-    props: {
-      propTablesInclude: [Collapse],
     },
   },
 };

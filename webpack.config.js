@@ -8,15 +8,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'umd',
   },
-  externals: [
-    'react',
-    'react-dom',
-    'lodash',
-    'prop-types',
-    'styled-components',
-    'styled-tools',
-    'framer-motion',
-  ],
+  externals: ['react', 'react-dom', 'lodash', 'prop-types', 'framer-motion'],
   module: {
     rules: [
       {
