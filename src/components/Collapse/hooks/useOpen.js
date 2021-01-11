@@ -1,12 +1,12 @@
-import { useCallback, useState, useEffect, useRef } from 'react';
+import { useCallback, useState, useEffect, useRef, useMemo } from 'react';
 import _ from 'lodash';
 
 export default ({
   closeOnEscape,
   closeOnEnter,
   closeOnRemoteClick,
-  isOpen: providedIsOpen = false,
-  isOpenControlled,
+  isOpen: providedIsOpen,
+  initialIsOpen,
   onChangeOpen,
 }) => {
   const targetsMap = useRef({});
@@ -19,7 +19,11 @@ export default ({
     []
   );
 
-  const [isOpen, setOpen] = useState(() => providedIsOpen);
+  const [isOpen, setOpen] = useState(initialIsOpen);
+
+  const isOpenControlled = useMemo(() => _.isBoolean(providedIsOpen), [
+    providedIsOpen,
+  ]);
 
   const updateOpen = useCallback(
     (value, force) => {

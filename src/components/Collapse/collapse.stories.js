@@ -16,25 +16,29 @@ export default {
     isOpen: {
       control: 'boolean',
       description:
-        'Whether collapse expanded or not (if isOpenControlled it reacts on changes else it defines only initial isOpen state)',
-      defaultValue: false,
-      table: {
-        defaultValue: { summary: false },
-      },
-    },
-    isOpenControlled: {
-      control: 'boolean',
-      description:
-        'Whether collapse body visibility controlled or not, use if you want control collapse state from external component',
-      defaultValue: false,
-      table: {
-        defaultValue: { summary: false },
-      },
+        'Whether collapse expanded or not. If this prop provided you should control Collapse visibility from outside.',
     },
     onChangeOpen: {
       action: 'onChangeOpen',
       description:
         'Function triggered when collapse should change isOpen state',
+    },
+    initialIsOpen: {
+      control: 'boolean',
+      description: 'Whether collapse expanded on init or not',
+      defaultValue: false,
+      table: {
+        defaultValue: { summary: false },
+      },
+    },
+    lazy: {
+      control: 'boolean',
+      description:
+        'Whether collapse body should be present in the document before first opening or not',
+      defaultValue: false,
+      table: {
+        defaultValue: { summary: false },
+      },
     },
     closeOnEscape: {
       control: 'boolean',
@@ -228,7 +232,7 @@ export function ControlledCollapse(props) {
   return (
     <div>
       <button onClick={handleToggle}>Click me</button>
-      <Collapse {...collapseProps} isOpenControlled isOpen={isOpen}>
+      <Collapse {...collapseProps} isOpen={isOpen}>
         <Body {...bodyProps}>:)</Body>
       </Collapse>
     </div>
@@ -241,14 +245,11 @@ export function customAnimation() {
       <Header>Open</Header>
       <Body
         animation={{
-          initial: {
+          closed: {
             opacity: 0,
           },
-          animate: {
+          open: {
             opacity: 1,
-          },
-          exit: {
-            opacity: 0,
           },
           transition: { duration: 0.1, ease: [0.3, 0.6, 0.3, 0.2] },
         }}

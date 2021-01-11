@@ -7,19 +7,20 @@ import { useOpen } from './hooks';
 
 const Collapse = ({
   children,
+  initialIsOpen,
   isOpen: providedIsOpen,
   onChangeOpen,
-  isOpenControlled,
   closeOnRemoteClick,
   closeOnEscape,
   closeOnEnter,
+  lazy,
 }) => {
   const { addTarget, isOpen, open, close, toggle } = useOpen({
+    initialIsOpen,
     closeOnRemoteClick,
     closeOnEscape,
     closeOnEnter,
     isOpen: providedIsOpen,
-    isOpenControlled,
     onChangeOpen,
   });
 
@@ -30,6 +31,7 @@ const Collapse = ({
       close,
       toggle,
       ref: addTarget(index),
+      lazy,
     })
   );
 };
@@ -40,16 +42,17 @@ Collapse.propTypes = {
   closeOnEnter: PropTypes.bool,
   onChangeOpen: PropTypes.func,
   isOpen: PropTypes.bool,
-  isOpenControlled: PropTypes.bool,
+  initialIsOpen: PropTypes.bool,
+  lazy: PropTypes.bool,
 };
 
 Collapse.defaultProps = {
   closeOnRemoteClick: false,
   closeOnEscape: false,
   closeOnEnter: false,
-  isOpen: false,
-  isOpenControlled: false,
+  initialIsOpen: false,
   onChangeOpen: _.noop,
+  lazy: true,
 };
 
 Collapse.Header = Header;

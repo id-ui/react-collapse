@@ -7,6 +7,10 @@ import _ from 'lodash';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useOpen } from 'components/Collapse/hooks';
 
+const checkIfClosed = (body) =>
+  expect(body.style.transform).toBe('scaleY(0) translateZ(0)');
+const checkIfOpen = (body) => expect(body.style.transform).toBe('none');
+
 describe('Collapse', () => {
   it('accessible', async () => {
     const { container } = render(
@@ -21,17 +25,17 @@ describe('Collapse', () => {
 
   it('opens/closes on header click', async () => {
     const { getByText, queryByText } = render(
-      <Collapse>
+      <Collapse lazy={false}>
         <Collapse.Header>header</Collapse.Header>
         <Collapse.Body>body</Collapse.Body>
       </Collapse>
     );
 
-    expect(queryByText('body')).not.toBeInTheDocument();
+    checkIfClosed(queryByText('body'));
     user.click(getByText('header'));
-    expect(getByText('body')).toBeInTheDocument();
+    await waitFor(() => checkIfOpen(getByText('body')));
     user.click(getByText('header'));
-    await waitFor(() => expect(queryByText('body')).not.toBeInTheDocument());
+    await waitFor(() => checkIfClosed(queryByText('body')));
   });
 
   it('header function', async () => {
@@ -60,13 +64,13 @@ describe('Collapse', () => {
     user.click(getByTestId('header'));
     expect(queryByText('body')).not.toBeInTheDocument();
     user.click(getByTestId('open'));
-    expect(getByText('body')).toBeInTheDocument();
+    await waitFor(() => checkIfOpen(getByText('body')));
     user.click(getByTestId('close'));
-    await waitFor(() => expect(queryByText('body')).not.toBeInTheDocument());
+    await waitFor(() => checkIfClosed(getByText('body')));
     user.click(getByTestId('toggle'));
-    expect(getByText('body')).toBeInTheDocument();
+    await waitFor(() => checkIfOpen(getByText('body')));
     user.click(getByTestId('toggle'));
-    await waitFor(() => expect(queryByText('body')).not.toBeInTheDocument());
+    await waitFor(() => checkIfClosed(getByText('body')));
   });
 
   it('body function', async () => {
@@ -88,14 +92,18 @@ describe('Collapse', () => {
 
     expect(queryByText('body')).not.toBeInTheDocument();
     user.click(getByText('header'));
-    expect(getByText('body')).toBeInTheDocument();
+    await waitFor(() =>
+      checkIfOpen(getByText('body').parentElement.parentElement)
+    );
     user.click(getByText('close'));
-    await waitFor(() => expect(queryByText('body')).not.toBeInTheDocument());
+    await waitFor(() =>
+      checkIfClosed(getByText('body').parentElement.parentElement)
+    );
   });
 
   it('handles controlled open state', async () => {
     const { getByText, queryByText, rerender } = render(
-      <Collapse isOpenControlled>
+      <Collapse isOpen={false}>
         <Collapse.Header>header</Collapse.Header>
         <Collapse.Body>body</Collapse.Body>
       </Collapse>
@@ -103,40 +111,40 @@ describe('Collapse', () => {
 
     expect(queryByText('body')).not.toBeInTheDocument();
     user.click(getByText('header'));
-    expect(queryByText('body')).not.toBeInTheDocument();
-
-    rerender(
-      <Collapse isOpenControlled isOpen>
-        <Collapse.Header>header</Collapse.Header>
-        <Collapse.Body>body</Collapse.Body>
-      </Collapse>
-    );
-
-    expect(getByText('body')).toBeInTheDocument();
-    user.click(getByText('header'));
-    expect(getByText('body')).toBeInTheDocument();
-
-    rerender(
-      <Collapse isOpenControlled>
-        <Collapse.Header>header</Collapse.Header>
-        <Collapse.Body>body</Collapse.Body>
-      </Collapse>
-    );
-
     await waitFor(() => expect(queryByText('body')).not.toBeInTheDocument());
+
+    rerender(
+      <Collapse isOpen>
+        <Collapse.Header>header</Collapse.Header>
+        <Collapse.Body>body</Collapse.Body>
+      </Collapse>
+    );
+
+    await waitFor(() => checkIfOpen(getByText('body')));
+    user.click(getByText('header'));
+    await waitFor(() => checkIfOpen(getByText('body')));
+
+    rerender(
+      <Collapse isOpen={false}>
+        <Collapse.Header>header</Collapse.Header>
+        <Collapse.Body>body</Collapse.Body>
+      </Collapse>
+    );
+
+    await waitFor(() => checkIfClosed(getByText('body')));
   });
 
   it('closes on enter', async () => {
-    const { getByText, queryByText, rerender } = render(
+    const { getByText, rerender } = render(
       <Collapse closeOnEnter>
         <Collapse.Header>header</Collapse.Header>
         <Collapse.Body>body</Collapse.Body>
       </Collapse>
     );
     user.click(getByText('header'));
-    expect(getByText('body')).toBeInTheDocument();
+    await waitFor(() => checkIfOpen(getByText('body')));
     fireEvent.keyDown(document.body, { key: 'Enter', code: 'Enter' });
-    await waitFor(() => expect(queryByText('body')).not.toBeInTheDocument());
+    await waitFor(() => checkIfClosed(getByText('body')));
 
     rerender(
       <Collapse closeOnEnter={false}>
@@ -146,41 +154,41 @@ describe('Collapse', () => {
     );
 
     user.click(getByText('header'));
-    expect(getByText('body')).toBeInTheDocument();
+    await waitFor(() => checkIfOpen(getByText('body')));
     fireEvent.keyDown(document.body, { key: 'Enter', code: 'Enter' });
-    await waitFor(() => expect(getByText('body')).toBeInTheDocument());
+    await waitFor(() => checkIfOpen(getByText('body')));
   });
 
   it('closes on escape', async () => {
-    const { getByText, queryByText } = render(
+    const { getByText } = render(
       <Collapse closeOnEscape>
         <Collapse.Header>header</Collapse.Header>
         <Collapse.Body>body</Collapse.Body>
       </Collapse>
     );
     user.click(getByText('header'));
-    expect(getByText('body')).toBeInTheDocument();
+    await waitFor(() => checkIfOpen(getByText('body')));
     fireEvent.keyDown(document.body, { key: 'Escape', code: 'Escape' });
-    await waitFor(() => expect(queryByText('body')).not.toBeInTheDocument());
+    await waitFor(() => checkIfClosed(getByText('body')));
   });
 
   it('closes on remote click', async () => {
-    const { getByText, queryByText } = render(
+    const { getByText } = render(
       <Collapse closeOnRemoteClick>
         <Collapse.Header>header</Collapse.Header>
         <Collapse.Body>body</Collapse.Body>
       </Collapse>
     );
     user.click(getByText('header'));
-    expect(getByText('body')).toBeInTheDocument();
+    await waitFor(() => checkIfOpen(getByText('body')));
     const button = document.createElement('button');
     document.body.appendChild(button);
     fireEvent.mouseDown(button, { which: 1 });
-    await waitFor(() => expect(queryByText('body')).not.toBeInTheDocument());
+    await waitFor(() => checkIfClosed(getByText('body')));
 
     user.click(getByText('header'));
     fireEvent.mouseDown(button, { which: 0 });
-    await waitFor(() => expect(getByText('body')).toBeInTheDocument());
+    await waitFor(() => checkIfOpen(getByText('body')));
   });
 
   it('useOpen: toggle, open, close', async () => {
@@ -191,6 +199,7 @@ describe('Collapse', () => {
         closeOnEscape: true,
         closeOnEnter: false,
         onChangeOpen: _.noop,
+        initialIsOpen: false,
       },
     });
     expect(result.current.isOpen).toBe(false);
@@ -213,7 +222,8 @@ describe('Collapse', () => {
       initialProps: {
         onClose: _.noop,
         onChangeOpen: _.noop,
-        isOpenControlled: true,
+        initialIsOpen: false,
+        isOpen: false,
       },
     });
     expect(result.current.isOpen).toBe(false);
