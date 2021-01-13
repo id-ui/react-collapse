@@ -32,6 +32,7 @@ const Collapse = ({
       toggle,
       ref: addTarget(index),
       lazy,
+      initialIsOpen,
     })
   );
 };

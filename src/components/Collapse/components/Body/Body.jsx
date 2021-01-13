@@ -8,7 +8,10 @@ const STATES = {
   close: 'close',
 };
 
-function Body({ isOpen, children, close, animation, className, lazy }, ref) {
+function Body(
+  { isOpen, initialIsOpen, children, close, animation, className, lazy },
+  ref
+) {
   const [isInitialized, setInitialized] = useState(false);
 
   useEffect(() => {
@@ -22,7 +25,7 @@ function Body({ isOpen, children, close, animation, className, lazy }, ref) {
       {lazy && !isInitialized ? null : (
         <motion.div
           ref={ref}
-          initial={animation[STATES.close]}
+          initial={initialIsOpen ? false : animation[STATES.close]}
           transition={
             isOpen
               ? animation.transition[STATES.open]

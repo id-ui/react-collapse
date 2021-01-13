@@ -11,6 +11,8 @@ function Header(
     children,
     // eslint-disable-next-line no-unused-vars
     lazy,
+    // eslint-disable-next-line no-unused-vars
+    initialIsOpen,
     ...props
   },
   ref
