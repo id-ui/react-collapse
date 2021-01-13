@@ -18,7 +18,7 @@ function Body({ isOpen, children, close, animation, className, lazy }, ref) {
   }, [isOpen]);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       {lazy && !isInitialized ? null : (
         <motion.div
           ref={ref}
