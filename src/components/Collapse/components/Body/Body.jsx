@@ -47,8 +47,10 @@ BodyWithRef.propTypes = {
   className: PropTypes.string,
   animation: PropTypes.object,
   isOpen: PropTypes.bool,
+  initialIsOpen: PropTypes.bool,
   close: PropTypes.func,
   lazy: PropTypes.bool,
+  children: PropTypes.any,
 };
 
 BodyWithRef.defaultProps = {

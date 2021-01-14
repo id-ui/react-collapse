@@ -15,16 +15,16 @@ export default {
     isOpen: {
       control: 'boolean',
       description:
-        'Whether collapse expanded or not. If this prop provided you should control Collapse visibility from outside.',
+        'Whether Collapse expanded or not. If this prop provided you should control Collapse visibility from outside.',
     },
     onChangeOpen: {
       action: 'onChangeOpen',
       description:
-        'Function triggered when collapse should change isOpen state',
+        'Function triggered when Collapse should change isOpen state',
     },
     initialIsOpen: {
       control: 'boolean',
-      description: 'Whether collapse expanded on init or not',
+      description: 'Whether Collapse expanded on init or not',
       defaultValue: false,
       table: {
         defaultValue: { summary: false },
@@ -33,10 +33,10 @@ export default {
     lazy: {
       control: 'boolean',
       description:
-        'Whether collapse body should be present in the document before first opening or not',
-      defaultValue: false,
+        'Whether Collapse should render Collapse.Body on init or not. If false Collapse.Body will be first rendered on first open',
+      defaultValue: true,
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: true },
       },
     },
     closeOnEscape: {
@@ -65,7 +65,8 @@ export default {
     },
     'Collapse.Body.className': {
       control: 'text',
-      description: 'Body className',
+      description:
+        'Body className. Do not set padding or margin on body, use wrapper.',
     },
     'Collapse.Body.animation': {
       control: 'object',
@@ -137,13 +138,13 @@ const filterProps = (props) => {
     props,
     _.keys(props).filter((item) => item.startsWith('Collapse.Header'))
   );
-  const collapseProps = _.omit(props, [
+  const CollapseProps = _.omit(props, [
     ..._.keys(bodyProps),
     ..._.keys(headerProps),
   ]);
 
   return {
-    collapseProps,
+    CollapseProps,
     bodyProps: _.mapKeys(bodyProps, (value, key) =>
       key.replace('Collapse.Body.', '')
     ),
@@ -154,10 +155,10 @@ const filterProps = (props) => {
 };
 
 export function playground(props) {
-  const { bodyProps, headerProps, collapseProps } = filterProps(props);
+  const { bodyProps, headerProps, CollapseProps } = filterProps(props);
 
   return (
-    <Collapse {...collapseProps}>
+    <Collapse {...CollapseProps}>
       <Header {...headerProps}>Open</Header>
       <Body {...bodyProps}>
         <Content>
@@ -174,9 +175,9 @@ export function playground(props) {
 }
 
 export function headerFunction(props) {
-  const { bodyProps, headerProps, collapseProps } = filterProps(props);
+  const { bodyProps, headerProps, CollapseProps } = filterProps(props);
   return (
-    <Collapse {...collapseProps}>
+    <Collapse {...CollapseProps}>
       <Header {...headerProps}>
         {({ open, close, toggle }) => (
           <Fragment>
@@ -194,9 +195,9 @@ export function headerFunction(props) {
 }
 
 export function bodyFunction(props) {
-  const { bodyProps, headerProps, collapseProps } = filterProps(props);
+  const { bodyProps, headerProps, CollapseProps } = filterProps(props);
   return (
-    <Collapse {...collapseProps}>
+    <Collapse {...CollapseProps}>
       <Header {...headerProps}>Open</Header>
       <Body {...bodyProps}>
         {({ close }) => (
@@ -210,7 +211,7 @@ export function bodyFunction(props) {
 }
 
 export function ControlledCollapse(props) {
-  const { bodyProps, collapseProps } = filterProps(props);
+  const { bodyProps, CollapseProps } = filterProps(props);
   const [isOpen, setOpen] = useState(false);
 
   const handleToggle = useCallback(() => {
@@ -225,7 +226,7 @@ export function ControlledCollapse(props) {
   return (
     <div>
       <button onClick={handleToggle}>Click me</button>
-      <Collapse {...collapseProps} isOpen={isOpen}>
+      <Collapse {...CollapseProps} isOpen={isOpen}>
         <Body {...bodyProps}>:)</Body>
       </Collapse>
     </div>

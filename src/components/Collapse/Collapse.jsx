@@ -45,6 +45,7 @@ Collapse.propTypes = {
   isOpen: PropTypes.bool,
   initialIsOpen: PropTypes.bool,
   lazy: PropTypes.bool,
+  children: PropTypes.any,
 };
 
 Collapse.defaultProps = {

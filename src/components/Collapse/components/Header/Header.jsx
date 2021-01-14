@@ -32,6 +32,11 @@ const HeaderWithRef = React.forwardRef(Header);
 
 HeaderWithRef.propTypes = {
   className: PropTypes.string,
+  isOpen: PropTypes.bool,
+  open: PropTypes.func,
+  close: PropTypes.func,
+  toggle: PropTypes.func,
+  children: PropTypes.any,
 };
 
 export default HeaderWithRef;
