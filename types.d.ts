@@ -42,7 +42,7 @@ interface CollapseBodyProps {
     /**
      * Collapse.Body content
      */
-    children?: React.ReactNode | (({ close: VoidFunction }) => React.ReactNode);
+    children?: React.ReactChildren | (({ close: VoidFunction }) => React.ReactChildren);
 }
 
 class CollapseBody extends React.Component<CollapseBodyProps> {}
@@ -71,7 +71,7 @@ interface CollapseHeaderProps {
     /**
      * Collapse.Header content
     */
-    children?: React.ReactNode | (({ close: VoidFunction, open: VoidFunction, toggle: VoidFunction, isOpen: boolean }) => React.ReactNode);
+    children?: React.ReactChildren | (({ close: VoidFunction, open: VoidFunction, toggle: VoidFunction, isOpen: boolean }) => React.ReactChildren);
 }
 
 class CollapseHeader extends React.Component<CollapseHeaderProps> {}
@@ -98,7 +98,7 @@ interface CollapseProps {
     /**
      * Collapse children (Collapse.Body and Collapse.Header)
      */
-    children?: React.ReactNode[];
+    children?: React.ReactChildren;
     /**
      * Whether close on remote click or not
      * @default false
