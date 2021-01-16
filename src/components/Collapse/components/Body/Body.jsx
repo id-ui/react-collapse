@@ -61,7 +61,7 @@ BodyWithRef.defaultProps = {
     },
     [STATES.open]: {
       height: 'auto',
-      overflow: 'inherit',
+      overflow: 'visible',
     },
     transition: {
       [STATES.open]: { duration: 0.2, overflow: { delay: 0.2 } },

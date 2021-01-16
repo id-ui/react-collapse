@@ -8,8 +8,8 @@ interface CollapseTransition {
 }
 
 interface CollapseAnimation {
-    close: object;
     open: object;
+    close: object;
     transition: CollapseTransition;
 }
 
