@@ -3,9 +3,6 @@ import { render, waitFor, fireEvent } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 import Collapse from 'components/Collapse';
-import _ from 'lodash';
-import { renderHook, act } from '@testing-library/react-hooks';
-import { useOpen } from 'components/Collapse/hooks';
 
 const checkIfClosed = (body) => expect(body.style.height).toBe('0px');
 const checkIfOpen = (body) => expect(body.style.height).toBe('auto');
@@ -37,7 +34,7 @@ describe('Collapse', () => {
     await waitFor(() => checkIfClosed(queryByText('body')));
   });
 
-  it('header function', async () => {
+  it('handles header as function', async () => {
     const { getByTestId, getByText, queryByText } = render(
       <Collapse>
         <Collapse.Header data-testid="header">
@@ -72,7 +69,7 @@ describe('Collapse', () => {
     await waitFor(() => checkIfClosed(getByText('body')));
   });
 
-  it('body function', async () => {
+  it('handles body as function', async () => {
     const { getByText, queryByText } = render(
       <Collapse>
         <Collapse.Header>header</Collapse.Header>
@@ -188,45 +185,5 @@ describe('Collapse', () => {
     user.click(getByText('header'));
     fireEvent.mouseDown(button, { which: 0 });
     await waitFor(() => checkIfOpen(getByText('body')));
-  });
-
-  it('useOpen: toggle, open, close', async () => {
-    const { result } = renderHook(useOpen, {
-      initialProps: {
-        onClose: _.noop,
-        closeOnRemoteClick: true,
-        closeOnEscape: true,
-        closeOnEnter: false,
-        onChangeOpen: _.noop,
-        initialIsOpen: false,
-      },
-    });
-    expect(result.current.isOpen).toBe(false);
-    act(() => result.current.toggle());
-    expect(result.current.isOpen).toBe(true);
-    act(() => result.current.toggle());
-    expect(result.current.isOpen).toBe(false);
-    act(() => result.current.toggle(false));
-    expect(result.current.isOpen).toBe(false);
-    act(() => result.current.open());
-    expect(result.current.isOpen).toBe(true);
-    act(() => result.current.close());
-    expect(result.current.isOpen).toBe(false);
-    act(() => result.current.setOpen(true, true));
-    expect(result.current.isOpen).toBe(true);
-  });
-
-  it('useOpen: controlled visibility', async () => {
-    const { result } = renderHook(useOpen, {
-      initialProps: {
-        onClose: _.noop,
-        onChangeOpen: _.noop,
-        initialIsOpen: false,
-        isOpen: false,
-      },
-    });
-    expect(result.current.isOpen).toBe(false);
-    act(() => result.current.toggle());
-    expect(result.current.isOpen).toBe(false);
   });
 });
