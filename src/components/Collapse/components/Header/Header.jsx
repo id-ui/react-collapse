@@ -17,11 +17,15 @@ function Header(
   },
   ref
 ) {
-  return _.isFunction(children) ? (
-    <div ref={ref} {...props}>
-      {children({ isOpen, open, close, toggle })}
-    </div>
-  ) : (
+  if (_.isFunction(children)) {
+    return (
+      <div ref={ref} {...props}>
+        {children({ isOpen, open, close, toggle })}
+      </div>
+    );
+  }
+
+  return (
     <div ref={ref} onClick={toggle} {...props}>
       {children}
     </div>

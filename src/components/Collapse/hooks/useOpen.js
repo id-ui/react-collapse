@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect, useRef, useMemo } from 'react';
+import { useCallback, useState, useEffect, useRef } from 'react';
 import _ from 'lodash';
 
 export default ({
@@ -12,18 +12,13 @@ export default ({
   const targetsMap = useRef({});
   const parentNode = useRef(document.body);
 
-  const addTarget = useCallback(
-    (index) => (node) => {
-      targetsMap.current[index] = node;
-    },
-    []
-  );
+  const addTarget = (index) => (node) => {
+    targetsMap.current[index] = node;
+  };
 
   const [isOpen, setOpen] = useState(initialIsOpen);
 
-  const isOpenControlled = useMemo(() => _.isBoolean(providedIsOpen), [
-    providedIsOpen,
-  ]);
+  const isOpenControlled = _.isBoolean(providedIsOpen);
 
   const updateOpen = useCallback(
     (value, force) => {
