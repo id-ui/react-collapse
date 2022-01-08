@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import _ from 'lodash';
+import { isFunction } from 'lodash';
 import PropTypes from 'prop-types';
 
 const STATES = {
@@ -34,7 +34,7 @@ function Body(
           animate={isOpen ? animation[STATES.open] : animation[STATES.close]}
           className={className}
         >
-          {_.isFunction(children) ? children({ close }) : children}
+          {isFunction(children) ? children({ close }) : children}
         </motion.div>
       )}
     </AnimatePresence>

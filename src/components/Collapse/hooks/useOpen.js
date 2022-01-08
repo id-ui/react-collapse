@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect, useRef } from 'react';
-import _ from 'lodash';
+import { isBoolean } from 'lodash';
 
 export default ({
   closeOnEscape,
@@ -18,7 +18,7 @@ export default ({
 
   const [isOpen, setOpen] = useState(initialIsOpen);
 
-  const isOpenControlled = _.isBoolean(providedIsOpen);
+  const isOpenControlled = isBoolean(providedIsOpen);
 
   const updateOpen = useCallback(
     (value, force) => {
@@ -49,14 +49,14 @@ export default ({
 
   const toggle = useCallback(
     (value) => {
-      updateOpen(_.isBoolean(value) ? value : !isOpen);
+      updateOpen(isBoolean(value) ? value : !isOpen);
     },
     [isOpen, updateOpen]
   );
 
   useEffect(() => {
     const remoteClickListener = (e) => {
-      const targets = _.values(targetsMap.current).filter(Boolean);
+      const targets = Object.values(targetsMap.current).filter(Boolean);
       if (
         isOpen &&
         closeOnRemoteClick &&

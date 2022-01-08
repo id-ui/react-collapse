@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { noop } from 'lodash';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useOpen } from 'components/Collapse/hooks';
 
@@ -6,11 +6,11 @@ describe('useOpen', () => {
   it('handles toggle, open, close', async () => {
     const { result } = renderHook(useOpen, {
       initialProps: {
-        onClose: _.noop,
+        onClose: noop,
         closeOnRemoteClick: true,
         closeOnEscape: true,
         closeOnEnter: false,
-        onChangeOpen: _.noop,
+        onChangeOpen: noop,
         initialIsOpen: false,
       },
     });
@@ -32,8 +32,8 @@ describe('useOpen', () => {
   it('handles controlled visibility', async () => {
     const { result } = renderHook(useOpen, {
       initialProps: {
-        onClose: _.noop,
-        onChangeOpen: _.noop,
+        onClose: noop,
+        onChangeOpen: noop,
         initialIsOpen: false,
         isOpen: false,
       },

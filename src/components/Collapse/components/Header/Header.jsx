@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+import { isFunction } from 'lodash';
 import PropTypes from 'prop-types';
 
 function Header(
@@ -17,7 +17,7 @@ function Header(
   },
   ref
 ) {
-  if (_.isFunction(children)) {
+  if (isFunction(children)) {
     return (
       <div ref={ref} {...props}>
         {children({ isOpen, open, close, toggle })}

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import Header from './components/Header';
 import Body from './components/Body';
 import { useOpen } from './hooks';
@@ -53,7 +52,7 @@ Collapse.defaultProps = {
   closeOnEscape: false,
   closeOnEnter: false,
   initialIsOpen: false,
-  onChangeOpen: _.noop,
+  onChangeOpen: () => {},
   lazy: true,
 };
 

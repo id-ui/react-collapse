@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useState } from 'react';
 import styled from 'styled-components';
-import _ from 'lodash';
+import { pick, omit, mapKeys } from 'lodash';
 import { prop } from 'styled-tools';
 import Collapse from './Collapse';
 
@@ -130,25 +130,25 @@ const Button = styled.button`
 `;
 
 const filterProps = (props) => {
-  const bodyProps = _.pick(
+  const bodyProps = pick(
     props,
-    _.keys(props).filter((item) => item.startsWith('Collapse.Body'))
+    Object.keys(props).filter((item) => item.startsWith('Collapse.Body'))
   );
-  const headerProps = _.pick(
+  const headerProps = pick(
     props,
-    _.keys(props).filter((item) => item.startsWith('Collapse.Header'))
+    Object.keys(props).filter((item) => item.startsWith('Collapse.Header'))
   );
-  const CollapseProps = _.omit(props, [
-    ..._.keys(bodyProps),
-    ..._.keys(headerProps),
+  const CollapseProps = omit(props, [
+    ...Object.keys(bodyProps),
+    ...Object.keys(headerProps),
   ]);
 
   return {
     CollapseProps,
-    bodyProps: _.mapKeys(bodyProps, (value, key) =>
+    bodyProps: mapKeys(bodyProps, (value, key) =>
       key.replace('Collapse.Body.', '')
     ),
-    headerProps: _.mapKeys(headerProps, (value, key) =>
+    headerProps: mapKeys(headerProps, (value, key) =>
       key.replace('Collapse.Header.', '')
     ),
   };
