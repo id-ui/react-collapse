@@ -2,10 +2,12 @@ import React, { Fragment } from 'react';
 import { render, waitFor, fireEvent } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import Collapse from 'components/Collapse';
+import Collapse from '../components/Collapse';
 
-const checkIfClosed = (body) => expect(body.style.height).toBe('0px');
-const checkIfOpen = (body) => expect(body.style.height).toBe('auto');
+const checkIfClosed = (body: HTMLElement) =>
+  expect(body.style.height).toBe('0px');
+const checkIfOpen = (body: HTMLElement) =>
+  expect(body.style.height).toBe('auto');
 
 describe('Collapse', () => {
   it('accessible', async () => {
