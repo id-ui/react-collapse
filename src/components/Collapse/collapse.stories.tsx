@@ -1,16 +1,21 @@
 import React, { Fragment, useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { pick, omit, mapKeys } from 'lodash';
 import { prop } from 'styled-tools';
+import { ComponentMeta, ComponentStory, Story } from '@storybook/react';
 import Collapse from './Collapse';
+import {
+  CollapseCloserProps,
+  CollapseProps,
+  CollapseState,
+  CollapseToggleProps,
+} from './types';
+import { CollapseHeader } from './collapseHeader.stories';
+import { CollapseBody } from './collapseBody.stories';
+import { defaultAnimation } from './components/Body/config';
 
 export default {
   title: 'Collapse',
   component: Collapse,
-  subcomponents: {
-    'Collapse.Header': Collapse.Header,
-    'Collapse.Body': Collapse.Body,
-  },
   argTypes: {
     isOpen: {
       control: 'boolean',
@@ -63,29 +68,21 @@ export default {
         defaultValue: { summary: false },
       },
     },
-    'Collapse.Body.className': {
-      control: 'text',
-      description:
-        'Body className. Do not set padding or margin on body, use wrapper.',
-    },
-    'Collapse.Body.animation': {
+    animation: {
       control: 'object',
-      description: 'framer-motion props for opening/closing animation',
-      defaultValue: Collapse.Body.defaultProps.animation,
+      description:
+        'framer-motion props for opening/closing animation. Pass this prop to Collapse.Body.',
+      defaultValue: defaultAnimation,
       table: {
         defaultValue: {
-          summary: JSON.stringify(Collapse.Body.defaultProps.animation),
+          summary: JSON.stringify(defaultAnimation),
         },
       },
     },
-    'Collapse.Header.className': {
-      control: 'text',
-      description: 'Header className',
-    },
   },
-};
+} as ComponentMeta<typeof Collapse>;
 
-const Header = styled(Collapse.Header)`
+const Header = styled(CollapseHeader)`
   padding: 10px;
   line-height: 20px;
   cursor: ${prop('cursor', 'default')};
@@ -93,7 +90,7 @@ const Header = styled(Collapse.Header)`
   width: 100%;
 `;
 
-const Body = styled(Collapse.Body)`
+const Body = styled(CollapseBody)`
   box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -129,38 +126,11 @@ const Button = styled.button`
   }
 `;
 
-const filterProps = (props) => {
-  const bodyProps = pick(
-    props,
-    Object.keys(props).filter((item) => item.startsWith('Collapse.Body'))
-  );
-  const headerProps = pick(
-    props,
-    Object.keys(props).filter((item) => item.startsWith('Collapse.Header'))
-  );
-  const CollapseProps = omit(props, [
-    ...Object.keys(bodyProps),
-    ...Object.keys(headerProps),
-  ]);
-
-  return {
-    CollapseProps,
-    bodyProps: mapKeys(bodyProps, (value, key) =>
-      key.replace('Collapse.Body.', '')
-    ),
-    headerProps: mapKeys(headerProps, (value, key) =>
-      key.replace('Collapse.Header.', '')
-    ),
-  };
-};
-
-export function playground(props) {
-  const { bodyProps, headerProps, CollapseProps } = filterProps(props);
-
+export const Playground: Story<CollapseProps> = (props) => {
   return (
-    <Collapse {...CollapseProps}>
-      <Header {...headerProps}>Open</Header>
-      <Body {...bodyProps}>
+    <Collapse {...props}>
+      <Header {...CollapseHeader.args}>Open</Header>
+      <Body {...props}>
         <Content>
           Contrary to popular belief, Lorem Ipsum is not simply random text. It
           has roots in a piece of classical Latin literature from 45 BC, making
@@ -172,14 +142,13 @@ export function playground(props) {
       </Body>
     </Collapse>
   );
-}
+};
 
-export function headerFunction(props) {
-  const { bodyProps, headerProps, CollapseProps } = filterProps(props);
+export const HeaderFunction: Story<CollapseProps> = (props) => {
   return (
-    <Collapse {...CollapseProps}>
-      <Header {...headerProps}>
-        {({ open, close, toggle }) => (
+    <Collapse {...props}>
+      <Header {...CollapseHeader.args}>
+        {({ open, close, toggle }: CollapseToggleProps) => (
           <Fragment>
             <Button onClick={open}>Open</Button>
             <Button onClick={close}>Close</Button>
@@ -187,20 +156,19 @@ export function headerFunction(props) {
           </Fragment>
         )}
       </Header>
-      <Body {...bodyProps}>
+      <Body {...props}>
         <Content>:)</Content>
       </Body>
     </Collapse>
   );
-}
+};
 
-export function bodyFunction(props) {
-  const { bodyProps, headerProps, CollapseProps } = filterProps(props);
+export const BodyFunction: Story<CollapseProps> = (props) => {
   return (
-    <Collapse {...CollapseProps}>
-      <Header {...headerProps}>Open</Header>
-      <Body {...bodyProps}>
-        {({ close }) => (
+    <Collapse {...props}>
+      <Header {...CollapseHeader.args}>Open</Header>
+      <Body {...props}>
+        {({ close }: CollapseCloserProps) => (
           <Content>
             <Button onClick={close}>Close</Button>
           </Content>
@@ -208,10 +176,9 @@ export function bodyFunction(props) {
       </Body>
     </Collapse>
   );
-}
+};
 
-export function ControlledCollapse(props) {
-  const { bodyProps, CollapseProps } = filterProps(props);
+export const ControlledCollapse: Story<CollapseProps> = (props) => {
   const [isOpen, setOpen] = useState(false);
 
   const handleToggle = useCallback(() => {
@@ -226,28 +193,31 @@ export function ControlledCollapse(props) {
   return (
     <div>
       <button onClick={handleToggle}>Click me</button>
-      <Collapse {...CollapseProps} isOpen={isOpen}>
-        <Body {...bodyProps}>:)</Body>
+      <Collapse {...props} isOpen={isOpen}>
+        <Body {...props}>:)</Body>
       </Collapse>
     </div>
   );
-}
+};
 
-export function customAnimation() {
+export const CustomAnimation: ComponentStory<typeof Collapse> = () => {
   return (
     <Collapse>
       <Header>Open</Header>
-      <Body
+      <Collapse.Body
         animation={{
-          close: {
+          [CollapseState.close]: {
             opacity: 0,
           },
-          open: {
+          [CollapseState.open]: {
             opacity: 1,
           },
           transition: {
-            open: { duration: 0.2, ease: [0.3, 0.6, 0.3, 0.2] },
-            close: { duration: 0.1, ease: [0.3, 0.6, 0.3, 0.2] },
+            [CollapseState.open]: { duration: 0.2, ease: [0.3, 0.6, 0.3, 0.2] },
+            [CollapseState.close]: {
+              duration: 0.1,
+              ease: [0.3, 0.6, 0.3, 0.2],
+            },
           },
         }}
       >
@@ -259,7 +229,7 @@ export function customAnimation() {
           Latin words. Latin professor at Hampden-Sydney College in Virginia,
           looked up one of the more obscure Latin words.
         </Content>
-      </Body>
+      </Collapse.Body>
     </Collapse>
   );
-}
+};

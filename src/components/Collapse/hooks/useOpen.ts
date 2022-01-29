@@ -1,5 +1,12 @@
-import { useCallback, useState, useEffect, useRef } from 'react';
+import {
+  useCallback,
+  useState,
+  useEffect,
+  useRef,
+  MutableRefObject,
+} from 'react';
 import { isBoolean } from 'lodash';
+import { CollapseToggleableProps } from '../types';
 
 export default ({
   closeOnEscape,
@@ -8,11 +15,13 @@ export default ({
   isOpen: providedIsOpen,
   initialIsOpen,
   onChangeOpen,
-}) => {
-  const targetsMap = useRef({});
+}: CollapseToggleableProps) => {
+  const targetsMap: MutableRefObject<{ [key: number]: HTMLElement }> = useRef(
+    {}
+  );
   const parentNode = useRef(document.body);
 
-  const addTarget = (index) => (node) => {
+  const addTarget = (index: number) => (node: HTMLElement) => {
     targetsMap.current[index] = node;
   };
 
@@ -21,7 +30,7 @@ export default ({
   const isOpenControlled = isBoolean(providedIsOpen);
 
   const updateOpen = useCallback(
-    (value, force) => {
+    (value: boolean, force?: boolean) => {
       if (!force && (!isOpenControlled || providedIsOpen !== value)) {
         onChangeOpen(value);
       }
@@ -48,27 +57,40 @@ export default ({
   }, [updateOpen]);
 
   const toggle = useCallback(
-    (value) => {
+    (value?: boolean | unknown) => {
       updateOpen(isBoolean(value) ? value : !isOpen);
     },
     [isOpen, updateOpen]
   );
 
   useEffect(() => {
-    const remoteClickListener = (e) => {
-      const targets = Object.values(targetsMap.current).filter(Boolean);
-      if (
-        isOpen &&
-        closeOnRemoteClick &&
-        !targets.find((item) => item.contains(e.target)) &&
-        (e.which || e.button) === 1 &&
-        (!parentNode.current || parentNode.current.contains(e.target))
-      ) {
+    const remoteClickListener = (e: MouseEvent) => {
+      if ((e.which || e.button) !== 1) {
+        return;
+      }
+
+      if (!isOpen || !closeOnRemoteClick) {
+        return;
+      }
+
+      if (!(e.target instanceof Node)) {
+        return;
+      }
+
+      const targetNode: Node = e.target;
+
+      const isInsideClick =
+        (parentNode.current && !parentNode.current.contains(targetNode)) ||
+        Object.values(targetsMap.current).find(
+          (item) => item && item.contains(targetNode)
+        );
+
+      if (!isInsideClick) {
         close();
       }
     };
 
-    const keyDownListener = (e) => {
+    const keyDownListener = (e: KeyboardEvent) => {
       if (
         isOpen &&
         [closeOnEscape && 'Escape', closeOnEnter && 'Enter'].includes(e.key)
