@@ -1,12 +1,12 @@
 {
   "name": "@idui/react-collapse",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "React Collapse Component",
   "author": "kaprisa57@gmail.com",
   "license": "MIT",
   "repository": "id-ui/react-collapse",
   "main": "dist/index.js",
-  "types": "dist/types.d.ts",
+  "types": "dist/index.d.ts",
   "source": "src/index.js",
   "keywords": [
     "react",
