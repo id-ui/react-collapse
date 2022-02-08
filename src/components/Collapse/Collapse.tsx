@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { noop } from 'lodash';
+import { noop } from './helpers';
 import Header from './components/Header';
 import Body from './components/Body';
 import { useOpen } from './hooks';

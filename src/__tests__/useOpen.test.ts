@@ -1,4 +1,4 @@
-import { noop } from 'lodash';
+import { noop } from '../components/Collapse/helpers';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useOpen } from '../components/Collapse/hooks';
 

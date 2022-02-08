@@ -1,6 +1,6 @@
 import React, { MutableRefObject, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { isFunction } from 'lodash';
+import { isFunction } from '../../helpers';
 import { CollapseBodyProps, CollapseState } from '../../types';
 import { defaultAnimation } from './config';
 

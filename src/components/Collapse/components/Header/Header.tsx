@@ -1,5 +1,5 @@
 import React, { MutableRefObject } from 'react';
-import { isFunction, omit } from 'lodash';
+import { isFunction, omit } from '../../helpers';
 import { CollapseHeaderProps } from '../../types';
 
 const collapseChildExtraProps = ['lazy', 'initialIsOpen'];

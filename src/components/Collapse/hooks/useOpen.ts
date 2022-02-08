@@ -5,7 +5,7 @@ import {
   useRef,
   MutableRefObject,
 } from 'react';
-import { isBoolean } from 'lodash';
+import { isBoolean } from '../helpers';
 import { CollapseToggleableProps } from '../types';
 
 export default ({

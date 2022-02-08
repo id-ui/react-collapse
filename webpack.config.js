@@ -11,7 +11,6 @@ module.exports = {
   externals: [
     'react',
     'react-dom',
-    'lodash',
     'framer-motion'
   ],
   module: {
