@@ -3,16 +3,7 @@ export const noop = () => {}
 export const isBoolean = (value: unknown): value is boolean => typeof value === 'boolean';
 export const isFunction = (value: unknown): value is Function => value instanceof Function;
 
-type Primitive =
-    | bigint
-    | boolean
-    | null
-    | number
-    | string
-    | symbol
-    | undefined;
-
-type PlainObject = Record<string, Primitive>;
+type PlainObject = Record<string, unknown>;
 
 export const omit = (object: object, keysToExclude: string[]) => {
     const result: PlainObject  = {}
